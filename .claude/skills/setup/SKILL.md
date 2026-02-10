@@ -15,38 +15,36 @@ Check if the current directory contains the boilerplate template by looking for 
 
 ## Step 1: Create the repository (global mode only)
 
-**Ask the user** for:
+**Ask the user all of these in a single prompt:**
 - Project name (kebab-case, e.g. `my-cool-tool`)
 - One-line description
 - GitHub org or username for the repo (e.g. `alexcarol`)
 - Whether the repo should be private (default: yes)
-- Whether to **create a new directory** or **use the current directory** as the project root
+- Whether to use the **current directory** or create a **new subdirectory**
 
 Then check if `gh` CLI is available by running `gh --version`.
 
-**If `gh` is not available**, explain the manual steps:
+**If `gh` is not available**, explain the manual steps and stop (the user will re-run `/setup` after cloning manually):
 1. Go to https://github.com/alexcarol/team-boilerplate
 2. Click "Use this template" → "Create a new repository"
 3. Fill in the owner, repo name, and visibility
 4. Clone the new repo and cd into it
-5. Then re-run `/setup` from inside the project
+5. Re-run `/setup`
 
-If the manual path is taken, stop here — the user will re-run `/setup` after cloning.
+**If `gh` is available**, run the appropriate commands based on the answers already collected above. Do not ask again.
 
-**If `gh` is available**, the approach depends on the user's directory choice:
-
-**Option A — Create a new directory** (default):
-```
-gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
-cd <project-name>
-```
-
-**Option B — Use the current directory** (must be empty or have only dotfiles):
+If the user chose **current directory**:
 ```
 gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private
 git clone https://github.com/<org>/<project-name>.git .
 ```
-Note: `git clone <url> .` only works in an empty directory. If the directory isn't empty, warn the user and ask them to pick an empty directory or use Option A instead.
+If the current directory isn't empty, warn and suggest using a new subdirectory instead.
+
+If the user chose **new subdirectory**:
+```
+gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
+cd <project-name>
+```
 
 After the repo is created and files are present, continue to Step 2.
 
