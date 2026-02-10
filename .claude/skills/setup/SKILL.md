@@ -86,40 +86,51 @@ nvm install
 ```
 If that also fails, check `node --version` against `.nvmrc` and warn the user about the version mismatch.
 
-## Step 6: Guide through infrastructure setup
+## Step 6: Set up Cloudflare infrastructure
 
-Print each step clearly:
+### 6a. Create the D1 database
 
-**a. Google OAuth credentials:**
-- Reference the guide at `knowledge-base/google-oauth-setup.md`
-- They need a Google Cloud project with OAuth 2.0 credentials
-- Redirect URIs: `http://localhost:3000/auth/callback` (dev) and their production URL
+Run `npx wrangler d1 create <project-name>-db` and capture the output. Parse the `database_id` from the output and replace `YOUR_DATABASE_ID_HERE` in `wrangler.jsonc` with the actual ID.
 
-**b. Create the D1 database:**
-```
-wrangler d1 create <project-name>-db
-```
-- Tell them to copy the `database_id` from the output and update it in `wrangler.jsonc`
+If wrangler fails (e.g. not logged in), fall back to printing manual instructions for this step and continue.
 
-**c. Run migrations:**
-```
-wrangler d1 migrations apply <project-name>-db --local
-```
+### 6b. Run migrations locally
 
-**d. Create `.dev.vars`** for local development:
+Run `npx wrangler d1 migrations apply <project-name>-db --local`.
+
+### 6c. Generate `.dev.vars`
+
+Create `.dev.vars` with a generated `SESSION_SECRET` (use `openssl rand -hex 32`) and placeholder OAuth values:
+
 ```
-GOOGLE_CLIENT_ID=<their-client-id>
-GOOGLE_CLIENT_SECRET=<their-client-secret>
-SESSION_SECRET=<any-random-string>
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+SESSION_SECRET=<generated value>
 ```
 
-**e. Production secrets** (when ready to deploy):
-```
-wrangler secret put GOOGLE_CLIENT_ID
-wrangler secret put GOOGLE_CLIENT_SECRET
-wrangler secret put SESSION_SECRET
-```
+### 6d. Commit infrastructure changes
+
+Stage `wrangler.jsonc` (with the updated database_id) and commit: `Configure D1 database for <project-name>`.
+
+Do NOT commit `.dev.vars` — it is gitignored and contains secrets.
+
+### 6e. Print remaining manual steps
+
+Print clearly:
+1. **Google OAuth** — reference `knowledge-base/google-oauth-setup.md`. Mention redirect URIs: `http://localhost:3000/auth/callback` for dev, plus their production URL.
+2. **Update `.dev.vars`** with real OAuth credentials once obtained.
+3. **Production secrets** — when ready to deploy, run:
+   ```
+   wrangler secret put GOOGLE_CLIENT_ID
+   wrangler secret put GOOGLE_CLIENT_SECRET
+   wrangler secret put SESSION_SECRET
+   ```
 
 ## Step 7: Done
 
-Tell the user setup is complete and they can start developing with `npm run dev`. Point them to `knowledge-base/` if they want to learn more about the project conventions.
+Tell the user what was done automatically vs. what's left:
+- **Done**: D1 database created, migrations applied, `.dev.vars` generated, `database_id` configured in `wrangler.jsonc`
+- **Remaining**: Google OAuth setup (see the guide), then update `.dev.vars` with real credentials
+- Then run `npm run dev` to start developing
+
+Point them to `knowledge-base/` for more on project conventions.
