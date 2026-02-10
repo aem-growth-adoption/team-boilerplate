@@ -7,10 +7,10 @@ Cloudflare Workers boilerplate for rapid prototyping with Google OAuth (@adobe.c
 ### Install the skill
 
 ```bash
-npx skills add alexcarol/team-boilerplate
+npx skills add alexcarol/team-boilerplate --agent claude-code --global -y
 ```
 
-This installs the `/setup` skill globally. Then from any directory:
+Then from any directory:
 
 ```bash
 /setup
