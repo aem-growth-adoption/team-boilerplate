@@ -70,7 +70,20 @@ Stage all files and create an initial commit: `Initial commit for <project-name>
 
 ## Step 5: Install dependencies
 
-Run `npm install`
+The project requires the Node version specified in `.nvmrc`. Before installing, ensure the correct version is active:
+
+```
+nvm install
+npm install
+```
+
+If `nvm` is not available, attempt to install it first:
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.nvm/nvm.sh
+nvm install
+```
+If that also fails, check `node --version` against `.nvmrc` and warn the user about the version mismatch.
 
 ## Step 6: Guide through infrastructure setup
 
@@ -106,9 +119,6 @@ wrangler secret put GOOGLE_CLIENT_SECRET
 wrangler secret put SESSION_SECRET
 ```
 
-## Step 7: Reminders
+## Step 7: Done
 
-- Always use `wrangler.jsonc`, never `.toml`
-- Check latest Cloudflare docs when modifying CF config
-- Read `knowledge-base/` for team conventions
-- Run `npm run dev` to start on port 3000
+Tell the user setup is complete and they can start developing with `npm run dev`. Point them to `knowledge-base/` if they want to learn more about the project conventions.
