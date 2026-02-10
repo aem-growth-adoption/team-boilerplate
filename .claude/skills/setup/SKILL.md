@@ -1,68 +1,105 @@
 ---
 name: setup
-description: Customize a new project created from the growth boilerplate template. Replaces placeholders, commits, installs deps, and guides through Google OAuth and D1 setup.
+description: Create and set up a new project from the growth boilerplate template. Handles repo creation, placeholder replacement, dependency installation, and guides through Google OAuth and D1 setup.
 disable-model-invocation: true
 ---
 
-After creating a new project from the growth boilerplate template, this skill customizes it for you.
+This skill sets up a new project from the growth boilerplate template. It works in two modes depending on context.
 
-The user should have already run:
+## Step 0: Detect mode
+
+Check if the current directory contains the boilerplate template by looking for `{{PROJECT_NAME}}` in `package.json`.
+
+- **If placeholders are found**: you're inside a template project. Skip to Step 2.
+- **If not found** (or `package.json` doesn't exist): you need to create the repo first. Start at Step 1.
+
+## Step 1: Create the repository (global mode only)
+
+**Ask the user** for:
+- Project name (kebab-case, e.g. `my-cool-tool`)
+- One-line description
+- GitHub org or username for the repo (e.g. `alexcarol`)
+- Whether the repo should be private (default: yes)
+
+Then check if `gh` CLI is available by running `gh --version`.
+
+**If `gh` is available**, create the repo and clone it:
 ```
-gh repo create <org>/my-tool --template alexcarol/team-boilerplate --private --clone
+gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
+cd <project-name>
 ```
 
-Follow these steps in order:
+**If `gh` is not available**, explain the manual steps:
+1. Go to https://github.com/alexcarol/team-boilerplate
+2. Click "Use this template" → "Create a new repository"
+3. Fill in the owner, repo name, and visibility
+4. Clone the new repo and cd into it
+5. Then re-run `/setup` from inside the project
 
-1. **Ask the user** for:
-   - Project name (kebab-case, e.g. `my-cool-tool`)
-   - One-line description of the project
+If the manual path is taken, stop here — the user will re-run `/setup` after cloning.
 
-2. **Replace placeholders** in these files:
-   - `package.json`: replace `{{PROJECT_NAME}}` with the project name and `{{PROJECT_DESCRIPTION}}` with the description
-   - `wrangler.jsonc`: replace `{{PROJECT_NAME}}` with the project name
-   - `CLAUDE.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
-   - `AGENTS.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
-   - `index.html`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
+After `gh repo create` succeeds, continue to Step 2.
 
-3. **Git setup**:
-   - Stage all files and create an initial commit: `Initial commit for <project-name>`
+## Step 2: Ask for project info (if not already collected)
 
-4. **Install dependencies**: Run `npm install`
+If you didn't already ask in Step 1, **ask the user** for:
+- Project name (kebab-case, e.g. `my-cool-tool`)
+- One-line description of the project
 
-5. **Guide the user through setup**. Print each step clearly:
+## Step 3: Replace placeholders
 
-   **a. Google OAuth credentials:**
-   - Reference the guide at `knowledge-base/google-oauth-setup.md`
-   - They need a Google Cloud project with OAuth 2.0 credentials
-   - Redirect URIs: `http://localhost:3000/auth/callback` (dev) and their production URL
+Replace in these files:
+- `package.json`: replace `{{PROJECT_NAME}}` with the project name and `{{PROJECT_DESCRIPTION}}` with the description
+- `wrangler.jsonc`: replace `{{PROJECT_NAME}}` with the project name
+- `CLAUDE.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
+- `AGENTS.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
+- `index.html`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
 
-   **b. Create the D1 database:**
-   ```
-   wrangler d1 create <project-name>-db
-   ```
-   - Tell them to copy the `database_id` from the output and update it in `wrangler.jsonc`
+## Step 4: Git setup
 
-   **c. Run migrations:**
-   ```
-   wrangler d1 migrations apply <project-name>-db --local
-   ```
+Stage all files and create an initial commit: `Initial commit for <project-name>`
 
-   **d. Create `.dev.vars`** for local development:
-   ```
-   GOOGLE_CLIENT_ID=<their-client-id>
-   GOOGLE_CLIENT_SECRET=<their-client-secret>
-   SESSION_SECRET=<any-random-string>
-   ```
+## Step 5: Install dependencies
 
-   **e. Production secrets** (when ready to deploy):
-   ```
-   wrangler secret put GOOGLE_CLIENT_ID
-   wrangler secret put GOOGLE_CLIENT_SECRET
-   wrangler secret put SESSION_SECRET
-   ```
+Run `npm install`
 
-6. **Remind them**:
-   - Always use `wrangler.jsonc`, never `.toml`
-   - Check latest Cloudflare docs when modifying CF config
-   - Read `knowledge-base/` for team conventions
-   - Run `npm run dev` to start on port 3000
+## Step 6: Guide through infrastructure setup
+
+Print each step clearly:
+
+**a. Google OAuth credentials:**
+- Reference the guide at `knowledge-base/google-oauth-setup.md`
+- They need a Google Cloud project with OAuth 2.0 credentials
+- Redirect URIs: `http://localhost:3000/auth/callback` (dev) and their production URL
+
+**b. Create the D1 database:**
+```
+wrangler d1 create <project-name>-db
+```
+- Tell them to copy the `database_id` from the output and update it in `wrangler.jsonc`
+
+**c. Run migrations:**
+```
+wrangler d1 migrations apply <project-name>-db --local
+```
+
+**d. Create `.dev.vars`** for local development:
+```
+GOOGLE_CLIENT_ID=<their-client-id>
+GOOGLE_CLIENT_SECRET=<their-client-secret>
+SESSION_SECRET=<any-random-string>
+```
+
+**e. Production secrets** (when ready to deploy):
+```
+wrangler secret put GOOGLE_CLIENT_ID
+wrangler secret put GOOGLE_CLIENT_SECRET
+wrangler secret put SESSION_SECRET
+```
+
+## Step 7: Reminders
+
+- Always use `wrangler.jsonc`, never `.toml`
+- Check latest Cloudflare docs when modifying CF config
+- Read `knowledge-base/` for team conventions
+- Run `npm run dev` to start on port 3000
