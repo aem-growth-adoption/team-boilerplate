@@ -1,3 +1,9 @@
+---
+name: setup
+description: Customize a new project created from the growth boilerplate template. Replaces placeholders, commits, installs deps, and guides through Google OAuth and D1 setup.
+disable-model-invocation: true
+---
+
 After creating a new project from the growth boilerplate template, this skill customizes it for you.
 
 The user should have already run:
