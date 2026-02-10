@@ -4,28 +4,27 @@ Cloudflare Workers boilerplate for rapid prototyping with Google OAuth (@adobe.c
 
 ## Quick Start
 
-### Install the `/setup` skill globally
+### Install the skill
 
 ```bash
-git clone https://github.com/alexcarol/team-boilerplate.git ~/.claude/skill-repos/team-boilerplate \
-  && ln -s ~/.claude/skill-repos/team-boilerplate/.claude/skills/setup ~/.claude/skills/setup
+npx skills add alexcarol/team-boilerplate
 ```
 
-This symlinks the skill into Claude Code's global skills directory. To update later:
+This installs the `/setup` skill globally. Then from any directory:
 
 ```bash
-git -C ~/.claude/skill-repos/team-boilerplate pull
-```
-
-### Create a new project
-
-From any directory in Claude Code, run:
-
-```
 /setup
 ```
 
-The skill creates a new repo from the template, customizes it, installs dependencies, and walks you through Google OAuth and D1 configuration. It works from an empty directory or creates a new one.
+The skill will create a new repo from the template, customize it, install dependencies, and walk you through Google OAuth and D1 configuration.
+
+### Or create manually
+
+```bash
+gh repo create <org>/my-tool --template alexcarol/team-boilerplate --private --clone
+cd my-tool
+/setup
+```
 
 ## What's Included
 
