@@ -61,9 +61,10 @@ If you didn't already ask in Step 1, **ask the user** for:
 Replace in these files:
 - `package.json`: replace `{{PROJECT_NAME}}` with the project name and `{{PROJECT_DESCRIPTION}}` with the description
 - `wrangler.jsonc`: replace `{{PROJECT_NAME}}` with the project name
-- `CLAUDE.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
 - `AGENTS.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
 - `index.html`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
+
+Note: `CLAUDE.md` imports `AGENTS.md` via `@AGENTS.md`, so it doesn't need separate replacement.
 
 ## Step 4: Git setup
 
