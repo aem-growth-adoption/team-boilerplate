@@ -15,7 +15,7 @@ Check if the current directory contains the boilerplate template by looking for 
 
 ## Step 1: Create the repository (global mode only)
 
-**Ask the user all of these in a single prompt:**
+**Use the `AskUserQuestion` tool to ask all of these in a single prompt:**
 - Project name (kebab-case, e.g. `my-cool-tool`)
 - One-line description
 - GitHub org or username for the repo (e.g. `alexcarol`)
@@ -50,7 +50,7 @@ After the repo is created and files are present, continue to Step 2.
 
 ## Step 2: Ask for project info (if not already collected)
 
-If you didn't already ask in Step 1, **ask the user** for:
+If you didn't already ask in Step 1, **use the `AskUserQuestion` tool** to ask for:
 - Project name (kebab-case, e.g. `my-cool-tool`)
 - One-line description of the project
 
