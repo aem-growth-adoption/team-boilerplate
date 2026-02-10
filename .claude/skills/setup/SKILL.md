@@ -19,8 +19,9 @@ Check if the current directory contains the boilerplate template by looking for 
 - Project name (kebab-case, e.g. `my-cool-tool`)
 - One-line description
 - GitHub org or username for the repo (e.g. `alexcarol`)
-- Whether the repo should be private (default: yes)
 - Whether to use the **current directory** or create a **new subdirectory**
+
+The repo is always created as **private**.
 
 Then check if `gh` CLI is available by running `gh --version`.
 
