@@ -39,7 +39,7 @@ When you discover something useful — a gotcha, a pattern, a better approach:
 
 Your project and the boilerplate will diverge quickly, so you can't simply push changes back. To contribute a learning or fix:
 
-1. Clone the boilerplate repo separately: `git clone git@github.com:adobe/growth-boilerplate.git boilerplate-upstream`
+1. Clone the template repo separately: `git clone git@github.com:alexcarol/team-boilerplate.git boilerplate-upstream`
 2. Copy the relevant files (typically `knowledge-base/` docs) from your project into the clone
 3. Open a PR from there
 

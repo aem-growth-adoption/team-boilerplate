@@ -17,4 +17,6 @@ Team conventions, patterns, and guides for building on this boilerplate. These d
 
 1. Edit or add a markdown file in this directory
 2. Update this README index if adding a new doc
-3. PR it to the boilerplate repo — other team members get it on next project clone
+3. PR it to the boilerplate repo — other team members get it on their next `gh repo create --template`
+
+See `ai-development.md` for the full contributing-back workflow.

@@ -1,4 +1,9 @@
-After cloning the growth boilerplate, this skill customizes the project for you.
+After creating a new project from the growth boilerplate template, this skill customizes it for you.
+
+The user should have already run:
+```
+gh repo create <org>/my-tool --template alexcarol/team-boilerplate --private --clone
+```
 
 Follow these steps in order:
 
@@ -14,7 +19,6 @@ Follow these steps in order:
    - `index.html`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
 
 3. **Git setup**:
-   - Remove the boilerplate remote: `git remote remove origin` (ignore errors if no remote exists)
    - Stage all files and create an initial commit: `Initial commit for <project-name>`
 
 4. **Install dependencies**: Run `npm install`

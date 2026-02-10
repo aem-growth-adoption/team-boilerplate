@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # Growth Boilerplate Setup Script
-# Run this after cloning if you're not using Claude Code's /setup skill.
+# Run this after creating a project from the template, if you're not using Claude Code's /setup skill.
+# Create from template: gh repo create <org>/my-tool --template alexcarol/team-boilerplate --private --clone
 
 echo "=== Growth Boilerplate Setup ==="
 echo ""
@@ -41,7 +42,6 @@ for file in "${FILES[@]}"; do
 done
 
 # 3. Git setup
-git remote remove origin 2>/dev/null || true
 git add -A
 git commit -m "Initial commit for $PROJECT_NAME"
 echo "  Created initial commit"
