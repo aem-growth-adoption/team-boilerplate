@@ -20,14 +20,9 @@ Check if the current directory contains the boilerplate template by looking for 
 - One-line description
 - GitHub org or username for the repo (e.g. `alexcarol`)
 - Whether the repo should be private (default: yes)
+- Whether to **create a new directory** or **use the current directory** as the project root
 
 Then check if `gh` CLI is available by running `gh --version`.
-
-**If `gh` is available**, create the repo and clone it:
-```
-gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
-cd <project-name>
-```
 
 **If `gh` is not available**, explain the manual steps:
 1. Go to https://github.com/alexcarol/team-boilerplate
@@ -38,7 +33,22 @@ cd <project-name>
 
 If the manual path is taken, stop here — the user will re-run `/setup` after cloning.
 
-After `gh repo create` succeeds, continue to Step 2.
+**If `gh` is available**, the approach depends on the user's directory choice:
+
+**Option A — Create a new directory** (default):
+```
+gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
+cd <project-name>
+```
+
+**Option B — Use the current directory** (must be empty or have only dotfiles):
+```
+gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private
+git clone https://github.com/<org>/<project-name>.git .
+```
+Note: `git clone <url> .` only works in an empty directory. If the directory isn't empty, warn the user and ask them to pick an empty directory or use Option A instead.
+
+After the repo is created and files are present, continue to Step 2.
 
 ## Step 2: Ask for project info (if not already collected)
 
