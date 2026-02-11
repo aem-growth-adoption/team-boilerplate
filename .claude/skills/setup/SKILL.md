@@ -76,6 +76,8 @@ Then, redesign `app.jsx` to be a visually appealing landing page for the project
 
 Delete the `.claude/skills/` directory — it contains skills (`setup`, `teardown`) that belong to the boilerplate template and are not needed in the new project.
 
+**Do NOT delete `.claude/settings.json`** — it contains the Cloudflare plugin configuration that the new project needs. Only remove the `skills/` subdirectory:
+
 ```
 rm -rf .claude/skills
 ```
