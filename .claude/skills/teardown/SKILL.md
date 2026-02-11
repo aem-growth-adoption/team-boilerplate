@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 This skill tears down a project created from the growth boilerplate template. It deletes the Cloudflare Worker, D1 database, and GitHub repository.
 
+**IMPORTANT: NEVER delete, remove, or modify local files or directories. This skill only removes remote resources.**
+
 ## Step 1: Identify the project
 
 Read `wrangler.jsonc` to get the worker name and D1 database name. Read `package.json` to confirm the project name. Read the git remote to identify the GitHub repository.
@@ -56,4 +58,4 @@ If `gh` is not available or the command fails, print the manual steps:
 
 ## Step 6: Done
 
-Summarize what was deleted and what failed (if anything). Remind the user that the local directory still exists and they can remove it manually with `rm -rf`.
+Summarize what was deleted and what failed (if anything). Do not touch or delete local files.
