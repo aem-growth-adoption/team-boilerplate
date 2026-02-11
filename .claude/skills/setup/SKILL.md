@@ -69,11 +69,19 @@ Replace in these files:
 
 Note: `CLAUDE.md` imports `AGENTS.md` via `@AGENTS.md`, so it doesn't need separate replacement.
 
-## Step 4: Git setup
+## Step 4: Remove boilerplate skills
+
+Delete the `.claude/skills/` directory — it contains skills (`setup`, `teardown`) that belong to the boilerplate template and are not needed in the new project.
+
+```
+rm -rf .claude/skills
+```
+
+## Step 5: Git setup
 
 Stage all files and create an initial commit: `Initial commit for <project-name>`
 
-## Step 5: Install dependencies
+## Step 6: Install dependencies
 
 The project requires the Node version specified in `.nvmrc`. Before installing, ensure the correct version is active:
 
@@ -90,31 +98,31 @@ nvm install
 ```
 If that also fails, check `node --version` against `.nvmrc` and warn the user about the version mismatch.
 
-## Step 6: Set up Cloudflare infrastructure
+## Step 7: Set up Cloudflare infrastructure
 
-### 6a. Create the D1 database
+### 7a. Create the D1 database
 
 Run `npx wrangler d1 create <project-name>-db` and capture the output. Parse the `database_id` from the output and replace `YOUR_DATABASE_ID_HERE` in `wrangler.jsonc` with the actual ID.
 
 If wrangler fails (e.g. not logged in), fall back to printing manual instructions for this step and continue.
 
-### 6b. Run migrations locally
+### 7b. Run migrations locally
 
 Run `npx wrangler d1 migrations apply <project-name>-db --local`.
 
-### 6c. Apply migrations remotely
+### 7c. Apply migrations remotely
 
 Run `npx wrangler d1 migrations apply <project-name>-db --remote`.
 
-### 6d. Commit infrastructure changes
+### 7d. Commit infrastructure changes
 
 Stage `wrangler.jsonc` (with the updated database_id) and commit: `Configure D1 database for <project-name>`.
 
-## Step 7: Deploy
+## Step 8: Deploy
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
 
-## Step 8: Done
+## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
 - **Done**: D1 database created, migrations applied locally and remotely, `database_id` configured in `wrangler.jsonc`, deployed to Cloudflare Workers
