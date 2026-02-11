@@ -25,7 +25,7 @@ The repo is always created under the `aem-growth-adoption` org as **private**. D
 Then check if `gh` CLI is available by running `gh --version`.
 
 **If `gh` is not available**, explain the manual steps and stop (the user will re-run `/setup` after cloning manually):
-1. Go to https://github.com/alexcarol/team-boilerplate
+1. Go to https://github.com/aem-growth-adoption/team-boilerplate
 2. Click "Use this template" → "Create a new repository"
 3. Fill in the owner, repo name, and visibility
 4. Clone the new repo and cd into it
@@ -35,7 +35,7 @@ Then check if `gh` CLI is available by running `gh --version`.
 
 If the user chose **current directory**:
 ```
-gh repo create aem-growth-adoption/<project-name> --template alexcarol/team-boilerplate --private
+gh repo create aem-growth-adoption/<project-name> --template aem-growth-adoption/team-boilerplate --private
 ```
 Then clone into the current directory. Use `git clone ... .` only if the directory is truly empty. Otherwise (e.g. a `.claude` directory exists), use this approach instead:
 ```
@@ -47,7 +47,7 @@ git checkout -b main origin/main
 
 If the user chose **new subdirectory**:
 ```
-gh repo create aem-growth-adoption/<project-name> --template alexcarol/team-boilerplate --private --clone
+gh repo create aem-growth-adoption/<project-name> --template aem-growth-adoption/team-boilerplate --private --clone
 cd <project-name>
 ```
 

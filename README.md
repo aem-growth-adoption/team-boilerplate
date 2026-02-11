@@ -7,7 +7,7 @@ Cloudflare Workers boilerplate for rapid prototyping with Hono, D1, and a portab
 ### Install the skill
 
 ```bash
-npx skills add alexcarol/team-boilerplate --agent claude-code --global -y
+npx skills add aem-growth-adoption/team-boilerplate --agent claude-code --global -y
 ```
 
 Then from any directory:
@@ -21,7 +21,7 @@ The skill will create a new repo from the template, customize it, install depend
 ### Or create manually
 
 ```bash
-gh repo create <org>/my-tool --template alexcarol/team-boilerplate --private --clone
+gh repo create <org>/my-tool --template aem-growth-adoption/team-boilerplate --private --clone
 cd my-tool
 /setup
 ```
