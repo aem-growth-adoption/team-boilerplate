@@ -102,7 +102,7 @@ If that also fails, check `node --version` against `.nvmrc` and warn the user ab
 
 ### 7a. Create the D1 database
 
-Run `npx wrangler d1 create <project-name>-db` and capture the output. Parse the `database_id` from the output and replace `YOUR_DATABASE_ID_HERE` in `wrangler.jsonc` with the actual ID.
+Run `npx wrangler d1 create <project-name>-db`.
 
 If wrangler fails (e.g. not logged in), fall back to printing manual instructions for this step and continue.
 
@@ -114,10 +114,6 @@ Run `npx wrangler d1 migrations apply <project-name>-db --local`.
 
 Run `npx wrangler d1 migrations apply <project-name>-db --remote`.
 
-### 7d. Commit infrastructure changes
-
-Stage `wrangler.jsonc` (with the updated database_id) and commit: `Configure D1 database for <project-name>`.
-
 ## Step 8: Deploy
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
@@ -125,7 +121,7 @@ Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Shar
 ## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, migrations applied locally and remotely, `database_id` configured in `wrangler.jsonc`, deployed to Cloudflare Workers
+- **Done**: D1 database created, migrations applied locally and remotely, deployed to Cloudflare Workers
 - Auth is pre-configured with basic HTTP auth (username: `admin`, password: `admin`) — change credentials in `worker/auth.js`
 - Run `npm run dev` for local development
 
