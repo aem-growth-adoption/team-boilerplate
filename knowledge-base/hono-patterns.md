@@ -42,7 +42,7 @@ c.header('X-Foo', 'bar')  // set response header
 
 // Cloudflare bindings
 c.env.DB              // D1 database
-c.env.GOOGLE_CLIENT_ID // secret/variable
+c.env.MY_SECRET    // secret/variable
 
 // Per-request storage (middleware → handler)
 c.set('user', userData)
@@ -72,14 +72,13 @@ app.use('/api/*', myMiddleware);
 Group related routes into separate Hono apps and mount them:
 
 ```js
-// auth.js
-export const authRoutes = new Hono();
-authRoutes.get('/login', (c) => { /* ... */ });
-authRoutes.get('/callback', (c) => { /* ... */ });
+// feature.js
+export const featureRoutes = new Hono();
+featureRoutes.get('/list', (c) => { /* ... */ });
 
 // index.js
-app.route('/auth', authRoutes);
-// Routes become /auth/login, /auth/callback, etc.
+app.route('/api/feature', featureRoutes);
+// Routes become /api/feature/list, etc.
 ```
 
 ## Adding New API Routes

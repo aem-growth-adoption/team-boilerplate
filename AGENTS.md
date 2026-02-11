@@ -5,8 +5,8 @@
 ## Architecture
 
 - **Worker**: Hono app on Cloudflare Workers (`worker/index.js`)
-- **Auth**: Google OAuth with @adobe.com domain restriction (`worker/auth.js`)
-- **Database**: Cloudflare D1 (SQLite) for sessions and KV storage (`worker/db.js`)
+- **Auth**: Basic HTTP auth with hardcoded credentials (`worker/auth.js`)
+- **Database**: Cloudflare D1 (SQLite) for KV storage (`worker/db.js`)
 - **Frontend**: Vanilla JS + Vite (`index.html`, `app.js`, `styles.css`)
 - **Deployment**: Cloudflare Workers via `npm run deploy`
 

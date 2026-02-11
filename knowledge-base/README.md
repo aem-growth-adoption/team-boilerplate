@@ -8,7 +8,6 @@ Team conventions, patterns, and guides for building on this boilerplate. These d
 |----------|---------------|
 | [cloudflare-workers.md](cloudflare-workers.md) | Workers patterns, wrangler.jsonc config, gotchas |
 | [hono-patterns.md](hono-patterns.md) | Middleware, routing, Hono context |
-| [google-oauth-setup.md](google-oauth-setup.md) | Step-by-step Google OAuth credential setup |
 | [d1-patterns.md](d1-patterns.md) | Migrations, queries, KV pattern |
 | [ai-development.md](ai-development.md) | Team AI tool learnings and conventions |
 | [experiment-lifecycle.md](experiment-lifecycle.md) | Build → validate → abandon/graduate |

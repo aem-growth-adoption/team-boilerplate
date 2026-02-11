@@ -8,8 +8,8 @@
   // Static assets configuration
   "assets": {
     "not_found_handling": "single-page-application",
-    // API and auth routes are handled by the worker, everything else serves static assets
-    "run_worker_first": ["/api/*", "/auth/*"]
+    // API routes are handled by the worker, everything else serves static assets
+    "run_worker_first": ["/api/*"]
   },
 
   // D1 database — update database_id after running: wrangler d1 create {{PROJECT_NAME}}-db
@@ -30,8 +30,5 @@
     }
   }
 
-  // Secrets (set via wrangler secret put):
-  // - GOOGLE_CLIENT_ID: Google OAuth client ID
-  // - GOOGLE_CLIENT_SECRET: Google OAuth client secret
-  // - SESSION_SECRET: HMAC signing key for session cookies
+  // Auth: Basic HTTP auth with hardcoded credentials (see worker/auth.js)
 }

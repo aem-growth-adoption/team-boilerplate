@@ -1,6 +1,6 @@
 # Growth Boilerplate
 
-Cloudflare Workers boilerplate for rapid prototyping with Google OAuth (@adobe.com), Hono, D1, and a portable knowledge base.
+Cloudflare Workers boilerplate for rapid prototyping with Hono, D1, and a portable knowledge base.
 
 ## Quick Start
 
@@ -16,7 +16,7 @@ Then from any directory:
 /setup
 ```
 
-The skill will create a new repo from the template, customize it, install dependencies, and walk you through Google OAuth and D1 configuration.
+The skill will create a new repo from the template, customize it, install dependencies, and set up D1.
 
 ### Or create manually
 
@@ -28,8 +28,8 @@ cd my-tool
 
 ## What's Included
 
-- **Hono** worker with Google OAuth (`@adobe.com` domain restriction)
-- **D1** database with session management and a generic KV store
+- **Hono** worker with basic HTTP auth
+- **D1** database with a generic KV store
 - **Vanilla JS** frontend with dark/light theme
 - **Vite** dev server on port 3000
 - **Knowledge base** — portable markdown docs any AI tool can consume
@@ -40,7 +40,7 @@ cd my-tool
 |-------|------|
 | Runtime | Cloudflare Workers |
 | Routing | Hono |
-| Auth | Google OAuth + HMAC-signed session cookies |
+| Auth | Basic HTTP auth |
 | Database | Cloudflare D1 (SQLite) |
 | Frontend | Vanilla JS + CSS custom properties |
 | Build | Vite + @cloudflare/vite-plugin |
@@ -52,9 +52,9 @@ cd my-tool
 ├── knowledge-base/                  # Team conventions (portable markdown)
 ├── worker/
 │   ├── index.js                     # Hono app entrypoint
-│   ├── auth.js                      # Google OAuth + session middleware
-│   └── db.js                        # D1 helpers (sessions + KV)
-├── migrations/0001_init.sql         # Sessions + KV tables
+│   ├── auth.js                      # Basic HTTP auth middleware
+│   └── db.js                        # D1 helpers (KV)
+├── migrations/0001_init.sql         # KV table
 ├── index.html                       # Frontend shell
 ├── app.js                           # Auth check, fetch wrapper
 ├── styles.css                       # Dark/light theme
@@ -76,7 +76,6 @@ The `knowledge-base/` directory is plain markdown — readable by any AI tool, I
 
 - [Cloudflare Workers patterns](knowledge-base/cloudflare-workers.md)
 - [Hono patterns](knowledge-base/hono-patterns.md)
-- [Google OAuth setup](knowledge-base/google-oauth-setup.md)
 - [D1 patterns](knowledge-base/d1-patterns.md)
 - [AI development conventions](knowledge-base/ai-development.md)
 - [Experiment lifecycle](knowledge-base/experiment-lifecycle.md)

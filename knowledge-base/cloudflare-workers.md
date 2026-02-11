@@ -11,8 +11,8 @@
 ```
 worker/
 ├── index.js     # Hono app entrypoint, exported as default
-├── auth.js      # OAuth routes + middleware
-└── db.js        # D1 helpers (sessions + KV)
+├── auth.js      # Basic HTTP auth middleware
+└── db.js        # D1 helpers (KV)
 ```
 
 The `main` field in `wrangler.jsonc` points to `worker/index.js`. This file exports the Hono app as `export default app`.
@@ -24,11 +24,11 @@ Static assets are served by Cloudflare's asset handling. Worker code only runs f
 ```jsonc
 "assets": {
   "not_found_handling": "single-page-application",
-  "run_worker_first": ["/api/*", "/auth/*"]
+  "run_worker_first": ["/api/*"]
 }
 ```
 
-Everything not matching `/api/*` or `/auth/*` serves static files from the build output.
+Everything not matching `/api/*` serves static files from the build output.
 
 ## Compatibility Flags
 
@@ -42,12 +42,7 @@ Always include `nodejs_compat` for access to Node.js APIs (crypto, etc.):
 
 Set secrets via `wrangler secret put <NAME>`. Never commit secrets to the repo.
 
-For local development, use `.dev.vars`:
-```
-GOOGLE_CLIENT_ID=your-client-id
-GOOGLE_CLIENT_SECRET=your-client-secret
-SESSION_SECRET=any-random-string-here
-```
+Auth credentials are hardcoded in `worker/auth.js` (basic HTTP auth).
 
 ## Deployment
 

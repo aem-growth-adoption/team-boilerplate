@@ -91,16 +91,6 @@ await dbDelete(db, 'user:preferences:alice');
 
 Values are JSON-serialized automatically. Expired keys are cleaned up on read.
 
-## Sessions
-
-Sessions are stored in the `sessions` table (see `worker/db.js`):
-
-```js
-import { createSession, getSession, deleteSession, cleanExpiredSessions } from './db.js';
-```
-
-The auth middleware handles session lookup automatically — you just read `c.get('user')` in your API routes.
-
 ## SQLite Notes
 
 - **No `NOW()`**: Use `unixepoch()` for current timestamp

@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { authRoutes, authMiddleware } from './auth.js';
+import { authMiddleware } from './auth.js';
 import { dbGet, dbSet, dbDelete, dbListKeys } from './db.js';
 
 const app = new Hono();
@@ -10,10 +10,7 @@ app.use('*', async (c, next) => {
   c.header('X-Robots-Tag', 'noindex, nofollow');
 });
 
-// Mount auth routes (no auth middleware on these)
-app.route('/auth', authRoutes);
-
-// Protect all API routes with auth middleware
+// Protect all API routes with basic auth middleware
 app.use('/api/*', authMiddleware);
 
 // GET /api/me — return current user

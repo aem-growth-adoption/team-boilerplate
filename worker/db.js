@@ -1,27 +1,3 @@
-// Session helpers
-
-export async function createSession(db, { id, email, name, picture, expiresAt }) {
-  await db.prepare(
-    'INSERT INTO sessions (id, email, name, picture, expires_at) VALUES (?, ?, ?, ?, ?)'
-  ).bind(id, email, name, picture, expiresAt).run();
-}
-
-export async function getSession(db, id) {
-  const session = await db.prepare(
-    'SELECT * FROM sessions WHERE id = ? AND expires_at > ?'
-  ).bind(id, Math.floor(Date.now() / 1000)).first();
-  return session;
-}
-
-export async function deleteSession(db, id) {
-  await db.prepare('DELETE FROM sessions WHERE id = ?').bind(id).run();
-}
-
-export async function cleanExpiredSessions(db) {
-  await db.prepare('DELETE FROM sessions WHERE expires_at <= ?')
-    .bind(Math.floor(Date.now() / 1000)).run();
-}
-
 // KV helpers
 
 export async function dbGet(db, key) {

@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Create and set up a new project from the growth boilerplate template. Handles repo creation, placeholder replacement, dependency installation, and guides through Google OAuth and D1 setup.
+description: Create and set up a new project from the growth boilerplate template. Handles repo creation, placeholder replacement, dependency installation, and D1 setup.
 disable-model-invocation: true
 ---
 
@@ -18,10 +18,9 @@ Check if the current directory contains the boilerplate template by looking for 
 **Use the `AskUserQuestion` tool to ask all of these in a single prompt:**
 - Project name (kebab-case, e.g. `my-cool-tool`)
 - One-line description
-- GitHub org or username for the repo (e.g. `alexcarol`)
 - Whether to use the **current directory** or create a **new subdirectory**
 
-The repo is always created as **private**.
+The repo is always created under the `aem-growth-adoption` org as **private**. Do not ask for the org.
 
 Then check if `gh` CLI is available by running `gh --version`.
 
@@ -36,14 +35,14 @@ Then check if `gh` CLI is available by running `gh --version`.
 
 If the user chose **current directory**:
 ```
-gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private
-git clone https://github.com/<org>/<project-name>.git .
+gh repo create aem-growth-adoption/<project-name> --template alexcarol/team-boilerplate --private
+git clone https://github.com/aem-growth-adoption/<project-name>.git .
 ```
 If the current directory isn't empty, warn and suggest using a new subdirectory instead.
 
 If the user chose **new subdirectory**:
 ```
-gh repo create <org>/<project-name> --template alexcarol/team-boilerplate --private --clone
+gh repo create aem-growth-adoption/<project-name> --template alexcarol/team-boilerplate --private --clone
 cd <project-name>
 ```
 
@@ -98,39 +97,15 @@ If wrangler fails (e.g. not logged in), fall back to printing manual instruction
 
 Run `npx wrangler d1 migrations apply <project-name>-db --local`.
 
-### 6c. Generate `.dev.vars`
-
-Create `.dev.vars` with a generated `SESSION_SECRET` (use `openssl rand -hex 32`) and placeholder OAuth values:
-
-```
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-SESSION_SECRET=<generated value>
-```
-
-### 6d. Commit infrastructure changes
+### 6c. Commit infrastructure changes
 
 Stage `wrangler.jsonc` (with the updated database_id) and commit: `Configure D1 database for <project-name>`.
-
-Do NOT commit `.dev.vars` — it is gitignored and contains secrets.
-
-### 6e. Print remaining manual steps
-
-Print clearly:
-1. **Google OAuth** — reference `knowledge-base/google-oauth-setup.md`. Mention redirect URIs: `http://localhost:3000/auth/callback` for dev, plus their production URL.
-2. **Update `.dev.vars`** with real OAuth credentials once obtained.
-3. **Production secrets** — when ready to deploy, run:
-   ```
-   wrangler secret put GOOGLE_CLIENT_ID
-   wrangler secret put GOOGLE_CLIENT_SECRET
-   wrangler secret put SESSION_SECRET
-   ```
 
 ## Step 7: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, migrations applied, `.dev.vars` generated, `database_id` configured in `wrangler.jsonc`
-- **Remaining**: Google OAuth setup (see the guide), then update `.dev.vars` with real credentials
-- Then run `npm run dev` to start developing
+- **Done**: D1 database created, migrations applied, `database_id` configured in `wrangler.jsonc`
+- Auth is pre-configured with basic HTTP auth (username: `admin`, password: `admin`) — change credentials in `worker/auth.js`
+- Run `npm run dev` to start developing
 
 Point them to `knowledge-base/` for more on project conventions.
