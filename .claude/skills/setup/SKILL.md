@@ -103,11 +103,15 @@ If that also fails, check `node --version` against `.nvmrc` and warn the user ab
 
 ## Step 7: Set up Cloudflare infrastructure
 
+> **Note:** If the user's Cloudflare account has access to multiple accounts, they should set `CLOUDFLARE_ACCOUNT_ID` before running wrangler commands (e.g. `export CLOUDFLARE_ACCOUNT_ID=<account-id>`). Mention this if wrangler prompts for an account choice or fails with an account-related error.
+
 ### 7a. Create the D1 database
 
-Run `npx wrangler d1 create <project-name>-db`.
+```bash
+npx wrangler d1 create <project-name>-db --update-config --binding DB
+```
 
-If wrangler fails (e.g. not logged in), fall back to printing manual instructions for this step and continue.
+This creates the database and adds the `d1_databases` config to `wrangler.jsonc` automatically. If wrangler fails (e.g. not logged in), tell the user to run `npx wrangler login` and re-run `/setup` from this step.
 
 ### 7b. Run migrations locally
 
@@ -117,6 +121,10 @@ Run `npx wrangler d1 migrations apply <project-name>-db --local`.
 
 Run `npx wrangler d1 migrations apply <project-name>-db --remote`.
 
+### 7d. Commit infrastructure changes
+
+Stage `wrangler.jsonc` and commit: `Configure D1 database`
+
 ## Step 8: Deploy
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
@@ -124,7 +132,7 @@ Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Shar
 ## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, migrations applied locally and remotely, deployed to Cloudflare Workers
+- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers
 - Auth is pre-configured with basic HTTP auth (username: `admin`, password: `admin`) — change credentials in `worker/auth.js`
 - Run `npm run dev` for local development
 

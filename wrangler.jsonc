@@ -12,14 +12,6 @@
     "run_worker_first": ["/api/*"]
   },
 
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "{{PROJECT_NAME}}-db",
-      "migrations_dir": "migrations"
-    }
-  ],
-
   // Enable detailed logging for debugging
   "observability": {
     "logs": {
