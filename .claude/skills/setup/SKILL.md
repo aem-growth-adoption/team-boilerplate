@@ -36,9 +36,14 @@ Then check if `gh` CLI is available by running `gh --version`.
 If the user chose **current directory**:
 ```
 gh repo create aem-growth-adoption/<project-name> --template alexcarol/team-boilerplate --private
-git clone https://github.com/aem-growth-adoption/<project-name>.git .
 ```
-If the current directory isn't empty, warn and suggest using a new subdirectory instead.
+Then clone into the current directory. Use `git clone ... .` only if the directory is truly empty. Otherwise (e.g. a `.claude` directory exists), use this approach instead:
+```
+git init
+git remote add origin https://github.com/aem-growth-adoption/<project-name>.git
+git fetch origin
+git checkout -b main origin/main
+```
 
 If the user chose **new subdirectory**:
 ```
@@ -97,15 +102,23 @@ If wrangler fails (e.g. not logged in), fall back to printing manual instruction
 
 Run `npx wrangler d1 migrations apply <project-name>-db --local`.
 
-### 6c. Commit infrastructure changes
+### 6c. Apply migrations remotely
+
+Run `npx wrangler d1 migrations apply <project-name>-db --remote`.
+
+### 6d. Commit infrastructure changes
 
 Stage `wrangler.jsonc` (with the updated database_id) and commit: `Configure D1 database for <project-name>`.
 
-## Step 7: Done
+## Step 7: Deploy
+
+Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
+
+## Step 8: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, migrations applied, `database_id` configured in `wrangler.jsonc`
+- **Done**: D1 database created, migrations applied locally and remotely, `database_id` configured in `wrangler.jsonc`, deployed to Cloudflare Workers
 - Auth is pre-configured with basic HTTP auth (username: `admin`, password: `admin`) — change credentials in `worker/auth.js`
-- Run `npm run dev` to start developing
+- Run `npm run dev` for local development
 
 Point them to `knowledge-base/` for more on project conventions.

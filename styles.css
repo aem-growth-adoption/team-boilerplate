@@ -50,34 +50,6 @@ body {
   min-height: 100vh;
 }
 
-/* Login */
-.login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem;
-  text-align: center;
-}
-
-.login-container h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-.subtitle {
-  color: var(--text-secondary);
-  margin-bottom: 2rem;
-  max-width: 400px;
-}
-
-.domain-note {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: 1rem;
-}
-
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -112,10 +84,6 @@ body {
   border: 1px solid var(--border);
 }
 
-.google-icon {
-  flex-shrink: 0;
-}
-
 /* Header */
 header {
   display: flex;
@@ -142,12 +110,6 @@ header {
   gap: 0.5rem;
   color: var(--text-secondary);
   font-size: 0.9rem;
-}
-
-.avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
 }
 
 /* Main content */
@@ -212,7 +174,4 @@ main {
     padding: 1.5rem;
   }
 
-  .login-container h1 {
-    font-size: 1.5rem;
-  }
 }
