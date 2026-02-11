@@ -7,7 +7,7 @@
 - **Worker**: Hono app on Cloudflare Workers (`worker/index.js`)
 - **Auth**: Basic HTTP auth with hardcoded credentials (`worker/auth.js`) — placeholder until IMS auth is implemented
 - **Database**: Cloudflare D1 (SQLite) for KV storage (`worker/db.js`)
-- **Frontend**: Vanilla JS + Vite (`index.html`, `app.js`, `styles.css`)
+- **Frontend**: React + React Spectrum + Vite (`index.html`, `app.jsx`)
 - **Deployment**: Cloudflare Workers via `npm run deploy`
 
 ## Team Knowledge

@@ -65,9 +65,12 @@ Replace in these files:
 - `package.json`: replace `{{PROJECT_NAME}}` with the project name and `{{PROJECT_DESCRIPTION}}` with the description
 - `wrangler.jsonc`: replace `{{PROJECT_NAME}}` with the project name
 - `AGENTS.md`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
-- `index.html`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
+- `index.html`: replace `{{PROJECT_NAME}}`
+- `app.jsx`: replace `{{PROJECT_NAME}}` and `{{PROJECT_DESCRIPTION}}`
 
 Note: `CLAUDE.md` imports `AGENTS.md` via `@AGENTS.md`, so it doesn't need separate replacement.
+
+Then, redesign `app.jsx` to be a visually appealing landing page for the project using React Spectrum components. The page should reflect the project's purpose based on its name and description. Be creative — use Spectrum layout components (`Flex`, `Grid`, `View`), typography (`Heading`, `Text`), and interactive elements (`Button`, `Well`, `Divider`, etc.) to make it look polished and professional. Keep it a single file.
 
 ## Step 4: Remove boilerplate skills
 
