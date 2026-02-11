@@ -1,3 +1,4 @@
+// Placeholder until IMS auth is implemented
 const USERNAME = 'admin';
 const PASSWORD = 'admin';
 
