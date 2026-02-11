@@ -33,16 +33,16 @@ Run:
 npx wrangler delete --name <worker-name>
 ```
 
-If it asks for confirmation, pass `--force` or pipe `yes` as needed. If it fails (e.g. worker doesn't exist), warn but continue.
+If it fails (e.g. worker doesn't exist), warn but continue.
 
 ## Step 4: Delete the D1 database
 
 Run:
 ```
-npx wrangler d1 delete <database-name>
+npx wrangler d1 delete <database-name> -y
 ```
 
-Pass `-y` to skip confirmation. If it fails (e.g. database doesn't exist or ID is still the placeholder), warn but continue.
+If it fails (e.g. database doesn't exist or ID is still the placeholder), warn but continue.
 
 ## Step 5: Move the repo into the archive monorepo
 
