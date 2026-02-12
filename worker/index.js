@@ -74,6 +74,11 @@ app.delete('/api/items/:id', async (c) => {
   return c.json({ success: true });
 });
 
+// Fallback to serve static assets for all other requests
+app.get('*', async (c) => {
+  return c.env.ASSETS.fetch(c.req.raw);
+});
+
 app.onError((err, c) => {
   console.error(err);
   return c.json({ error: 'Internal server error' }, 500);
