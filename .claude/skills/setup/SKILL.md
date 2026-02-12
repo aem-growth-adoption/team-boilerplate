@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Create and set up a new project from the growth boilerplate template. Handles repo creation, placeholder replacement, dependency installation, and D1 setup.
+description: Create and set up a new project from the growth boilerplate template. Handles repo creation, placeholder replacement, dependency installation, and KV namespace setup.
 disable-model-invocation: true
 ---
 
@@ -87,8 +87,8 @@ Replace the entire `README.md` with a project-specific version. Remove all boile
 
 - **Title**: the project name as an `h1`
 - **Description**: the one-line project description
-- **Stack table**: same tech stack table (Workers, Hono, Zero Trust, D1, React Spectrum, Vite)
-- **Project Structure**: updated tree — exclude `.claude/skills/` (it gets deleted in Step 4). Include `worker/`, `migrations/`, `knowledge-base/`, `index.html`, `app.jsx`, `vite.config.js`, `CLAUDE.md`, `AGENTS.md`
+- **Stack table**: same tech stack table (Workers, Hono, Zero Trust, KV, React Spectrum, Vite)
+- **Project Structure**: updated tree — exclude `.claude/skills/` (it gets deleted in Step 4). Include `worker/`, `knowledge-base/`, `index.html`, `app.jsx`, `vite.config.js`, `CLAUDE.md`, `AGENTS.md`
 - **Development section**: `npm run dev`, `npm run build`, `npm run deploy`
 - **Knowledge Base section**: link to the markdown files in `knowledge-base/`
 
@@ -130,25 +130,25 @@ If that also fails, check `node --version` against `.nvmrc` and warn the user ab
 
 > **Note:** If the user's Cloudflare account has access to multiple accounts, they should set `CLOUDFLARE_ACCOUNT_ID` before running wrangler commands (e.g. `export CLOUDFLARE_ACCOUNT_ID=<account-id>`). Mention this if wrangler prompts for an account choice or fails with an account-related error.
 
-### 7a. Create the D1 database
+### 7a. Create the KV namespace
 
 ```bash
-npx wrangler d1 create <project-name>-db --update-config --binding DB
+npx wrangler kv namespace create KV
 ```
 
-This creates the database and adds the `d1_databases` config to `wrangler.jsonc` automatically. If wrangler fails (e.g. not logged in), tell the user to run `npx wrangler login` and re-run `/setup` from this step.
+Parse the namespace ID from the output and add the `kv_namespaces` binding to `wrangler.jsonc`:
 
-### 7b. Run migrations locally
+```jsonc
+"kv_namespaces": [
+  { "binding": "KV", "id": "<namespace-id-from-output>" }
+]
+```
 
-Run `npx wrangler d1 migrations apply <project-name>-db --local`.
+If wrangler fails (e.g. not logged in), tell the user to run `npx wrangler login` and re-run `/setup` from this step.
 
-### 7c. Apply migrations remotely
+### 7b. Commit infrastructure changes
 
-Run `npx wrangler d1 migrations apply <project-name>-db --remote`.
-
-### 7d. Commit infrastructure changes
-
-Stage `wrangler.jsonc` and commit: `Configure D1 database`
+Stage `wrangler.jsonc` and commit: `Configure KV namespace`
 
 ## Step 8: Deploy
 
@@ -180,12 +180,12 @@ Push all local commits to the remote:
 git push origin main
 ```
 
-This ensures the repo on GitHub reflects the customized project (placeholder replacements, D1 config, production URL, etc.).
+This ensures the repo on GitHub reflects the customized project (placeholder replacements, KV config, production URL, etc.).
 
 ## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers, pushed to GitHub, Access app registered (or pending CI)
+- **Done**: KV namespace created, binding configured in `wrangler.jsonc`, deployed to Cloudflare Workers, pushed to GitHub, Access app registered (or pending CI)
 - Auth is handled by Cloudflare Zero Trust — `CF_ACCESS_AUD` is set automatically via the access-apps repo
 - Run `npm run dev` for local development
 

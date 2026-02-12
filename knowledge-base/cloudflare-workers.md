@@ -12,7 +12,7 @@
 worker/
 ├── index.js     # Hono app entrypoint, exported as default
 ├── auth.js      # Basic HTTP auth middleware
-└── db.js        # D1 helpers (KV)
+└── kv.js        # KV helpers
 ```
 
 The `main` field in `wrangler.jsonc` points to `worker/index.js`. This file exports the Hono app as `export default app`.
@@ -58,4 +58,4 @@ First deploy creates the worker. Subsequent deploys update it.
 - **Execution limits**: 50ms CPU time on free plan, 30s on paid. Most requests finish in <5ms.
 - **Subrequest limits**: 50 subrequests per invocation (each `fetch()` call counts).
 - **Global state is ephemeral**: Workers can be evicted at any time. Never rely on in-memory state across requests.
-- **D1 is SQLite**: Standard SQL, but some features differ from PostgreSQL/MySQL. See [d1-patterns.md](d1-patterns.md).
+- **D1 is optional**: If you need relational storage, see [d1-patterns.md](d1-patterns.md) for setup and SQLite notes.

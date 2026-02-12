@@ -41,7 +41,7 @@ c.redirect('/')           // redirect
 c.header('X-Foo', 'bar')  // set response header
 
 // Cloudflare bindings
-c.env.DB              // D1 database
+c.env.KV              // KV namespace
 c.env.MY_SECRET    // secret/variable
 
 // Per-request storage (middleware → handler)
@@ -85,12 +85,12 @@ app.route('/api/feature', featureRoutes);
 
 1. Add the route in `worker/index.js` under the `/api/*` group (automatically protected by auth middleware)
 2. Access the authenticated user via `c.get('user')`
-3. Access D1 via `c.env.DB`
+3. Access KV via `c.env.KV`
 
 ```js
 app.get('/api/my-feature', async (c) => {
   const user = c.get('user');
-  const data = await dbGet(c.env.DB, `feature:${user.email}`);
+  const data = await kvGet(c.env.KV, `feature:${user.email}`);
   return c.json(data);
 });
 ```

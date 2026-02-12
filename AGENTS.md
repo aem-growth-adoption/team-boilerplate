@@ -6,7 +6,7 @@
 
 - **Worker**: Hono app on Cloudflare Workers (`worker/index.js`)
 - **Auth**: Cloudflare Zero Trust (`worker/auth.js`) — verifies Access JWT on all routes. Access apps are managed via the [`access-apps`](https://github.com/aem-growth-adoption/access-apps) GitOps repo; `/setup` registers new projects automatically.
-- **Database**: Cloudflare D1 (SQLite) for KV storage (`worker/db.js`)
+- **Storage**: Cloudflare KV (`worker/kv.js`)
 - **Frontend**: React + React Spectrum + Vite (`index.html`, `app.jsx`)
 - **Deployment**: Cloudflare Workers via `npm run deploy`
 
@@ -26,8 +26,7 @@ npm run deploy    # Build and deploy to Cloudflare Workers
 
 - **Always use `wrangler.jsonc`**, never `.toml`. Check the latest Cloudflare docs when generating CF config.
 - **Auth is handled by middleware** — all routes are protected via Cloudflare Zero Trust JWT verification. Access the user via `c.get('user')`. Requires `CF_ACCESS_AUD` secret (the Access application audience tag).
-- **Use the KV helpers** in `worker/db.js` for simple data storage before creating new tables.
-- **Migrations are append-only** — never edit existing migration files, always create new ones.
+- **Use the KV helpers** in `worker/kv.js` for simple data storage.
 
 ## Adding API Routes
 
@@ -36,14 +35,11 @@ Add routes in `worker/index.js`. All routes are protected by auth middleware:
 ```js
 app.get('/api/my-feature', async (c) => {
   const user = c.get('user');
-  const data = await dbGet(c.env.DB, `feature:${user.email}`);
+  const data = await kvGet(c.env.KV, `feature:${user.email}`);
   return c.json(data);
 });
 ```
 
-## Adding D1 Tables
+## Adding D1
 
-1. Create a migration: `wrangler d1 migrations create {{PROJECT_NAME}}-db description`
-2. Write SQL in the generated file
-3. Apply locally: `wrangler d1 migrations apply {{PROJECT_NAME}}-db --local`
-4. Apply to production: `wrangler d1 migrations apply {{PROJECT_NAME}}-db --remote`
+If you need relational/SQL storage beyond what KV provides, you can add Cloudflare D1. See `knowledge-base/d1-patterns.md` for setup instructions, migration patterns, and query examples.

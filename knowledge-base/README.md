@@ -8,7 +8,7 @@ Team conventions, patterns, and guides for building on this boilerplate. These d
 |----------|---------------|
 | [cloudflare-workers.md](cloudflare-workers.md) | Workers patterns, wrangler.jsonc config, gotchas |
 | [hono-patterns.md](hono-patterns.md) | Middleware, routing, Hono context |
-| [d1-patterns.md](d1-patterns.md) | Migrations, queries, KV pattern |
+| [d1-patterns.md](d1-patterns.md) | Optional guide for adding D1 (SQLite) when KV isn't enough |
 | [ai-development.md](ai-development.md) | Team AI tool learnings and conventions |
 | [experiment-lifecycle.md](experiment-lifecycle.md) | Build → validate → abandon/graduate |
 

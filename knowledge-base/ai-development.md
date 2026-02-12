@@ -21,11 +21,11 @@ Cloudflare APIs and config change frequently. When generating or modifying Cloud
 ### Keep auth isolated
 All auth logic lives in `worker/auth.js`. When adding features, don't scatter auth checks — use the middleware pattern. Any route under `/api/*` is automatically protected.
 
-### Use the KV pattern for simple data
-Before reaching for a new table, consider if the KV helpers in `worker/db.js` are sufficient. They handle JSON serialization and TTL automatically.
+### Use the KV helpers for simple data
+Before reaching for a new storage solution, consider if the KV helpers in `worker/kv.js` are sufficient. They handle JSON serialization and TTL automatically via Cloudflare KV.
 
-### Migrations are append-only
-Never edit an existing migration file. Always create a new one. Use `wrangler d1 migrations create` to generate the next numbered file.
+### Migrations are append-only (D1 only)
+If you add D1 to your project, never edit an existing migration file. Always create a new one. Use `wrangler d1 migrations create` to generate the next numbered file. See `knowledge-base/d1-patterns.md` for details.
 
 ## Adding a Learning
 

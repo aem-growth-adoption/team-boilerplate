@@ -1,6 +1,6 @@
 ---
 name: archive
-description: Archive a project — deletes Cloudflare infra (Worker + D1) and archives the GitHub repo using GitHub's built-in archive feature.
+description: Archive a project — deletes Cloudflare infra (Worker + KV) and archives the GitHub repo using GitHub's built-in archive feature.
 disable-model-invocation: true
 ---
 
@@ -10,7 +10,7 @@ This skill archives a project created from the growth boilerplate template. It d
 
 ## Step 1: Identify the project
 
-Read `wrangler.jsonc` to get the worker name and D1 database name. Read `package.json` to confirm the project name. Read the git remote to identify the GitHub repository (org and repo name).
+Read `wrangler.jsonc` to get the worker name and KV namespace info. Read `package.json` to confirm the project name. Read the git remote to identify the GitHub repository (org and repo name).
 
 If any of these contain unresolved `{{PROJECT_NAME}}` placeholders, stop and tell the user this project was never set up — there's nothing to archive.
 
@@ -19,7 +19,7 @@ If any of these contain unresolved `{{PROJECT_NAME}}` placeholders, stop and tel
 **Use the `AskUserQuestion` tool** to ask for confirmation. Show the user exactly what will happen:
 
 - **Delete Cloudflare Worker**: `<worker-name>`
-- **Delete Cloudflare D1 database**: `<database-name>`
+- **Delete Cloudflare KV namespace**: `<namespace-id>` (from `kv_namespaces` in `wrangler.jsonc`)
 - **Archive GitHub repo** `<org>/<repo>` (makes it read-only, hidden from default org view)
 
 Ask: "This will permanently delete the infra and archive the repo. Are you sure?" with options "Yes, archive it" and "Cancel".
@@ -41,14 +41,14 @@ Clone `aem-growth-adoption/access-apps` (if not already cloned). Find the matchi
 
 If the entry doesn't exist in `apps.json`, skip this step with a note.
 
-## Step 4: Delete the D1 database
+## Step 4: Delete the KV namespace
 
-Run:
+Read the namespace ID from `kv_namespaces` in `wrangler.jsonc` and run:
 ```
-npx wrangler d1 delete <database-name> -y
+npx wrangler kv namespace delete --namespace-id <namespace-id>
 ```
 
-If it fails (e.g. database doesn't exist or ID is still the placeholder), warn but continue.
+If it fails (e.g. namespace doesn't exist or ID is still the placeholder), warn but continue.
 
 ## Step 5: Archive the GitHub repository
 
@@ -65,7 +65,7 @@ If `gh` is not available or the command fails, print the manual steps:
 ## Step 6: Done
 
 Summarize what was done:
-- Cloudflare Worker and D1 database deleted (or note failures)
+- Cloudflare Worker and KV namespace deleted (or note failures)
 - GitHub repository archived (read-only, hidden from default org listing)
 
 Do not touch or delete local files.

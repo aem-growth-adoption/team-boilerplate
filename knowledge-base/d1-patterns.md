@@ -1,6 +1,8 @@
-# D1 Patterns
+# Adding D1 to Your Project
 
-D1 is Cloudflare's SQLite database. It runs at the edge alongside your worker.
+This guide is for projects that need relational/SQL storage beyond what Cloudflare KV provides. D1 is Cloudflare's SQLite database — it runs at the edge alongside your worker.
+
+> **Note:** The boilerplate uses Cloudflare KV by default (`worker/kv.js`). Only add D1 if you need relational queries, joins, indexes, or structured schemas.
 
 ## Setup
 
@@ -43,6 +45,8 @@ wrangler d1 migrations create your-project-db add_feature
 
 Write standard SQL in the generated file. D1 uses SQLite syntax.
 
+Migrations are append-only — never edit an existing migration file, always create a new one.
+
 ## Query Patterns
 
 Access D1 through the `DB` binding on `c.env`:
@@ -65,28 +69,6 @@ await c.env.DB.prepare('INSERT INTO items (id, name) VALUES (?, ?)')
 ```
 
 Always use `.bind()` for parameterized queries — never concatenate values into SQL strings.
-
-## KV Pattern
-
-This boilerplate includes a generic key-value store on top of D1 (see `worker/db.js`):
-
-```js
-import { dbGet, dbSet, dbDelete, dbListKeys } from './db.js';
-
-// Store a value (with optional TTL in seconds)
-await dbSet(db, 'user:preferences:alice', { theme: 'dark' }, 86400);
-
-// Retrieve
-const prefs = await dbGet(db, 'user:preferences:alice');
-
-// List keys by prefix
-const keys = await dbListKeys(db, 'user:preferences:');
-
-// Delete
-await dbDelete(db, 'user:preferences:alice');
-```
-
-Values are JSON-serialized automatically. Expired keys are cleaned up on read.
 
 ## SQLite Notes
 
