@@ -10,8 +10,8 @@ app.use('*', async (c, next) => {
   c.header('X-Robots-Tag', 'noindex, nofollow');
 });
 
-// Protect all API routes with basic auth middleware
-app.use('/api/*', authMiddleware);
+// Verify Access JWT on all routes
+app.use('*', authMiddleware);
 
 // GET /api/me — return current user
 app.get('/api/me', (c) => {

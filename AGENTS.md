@@ -5,7 +5,7 @@
 ## Architecture
 
 - **Worker**: Hono app on Cloudflare Workers (`worker/index.js`)
-- **Auth**: Basic HTTP auth with hardcoded credentials (`worker/auth.js`) — placeholder until IMS auth is implemented
+- **Auth**: Cloudflare Zero Trust (`worker/auth.js`) — verifies Access JWT on all routes
 - **Database**: Cloudflare D1 (SQLite) for KV storage (`worker/db.js`)
 - **Frontend**: React + React Spectrum + Vite (`index.html`, `app.jsx`)
 - **Deployment**: Cloudflare Workers via `npm run deploy`
@@ -25,13 +25,13 @@ npm run deploy    # Build and deploy to Cloudflare Workers
 ## Conventions
 
 - **Always use `wrangler.jsonc`**, never `.toml`. Check the latest Cloudflare docs when generating CF config.
-- **Auth is handled by middleware** — all `/api/*` routes are automatically protected. Access the user via `c.get('user')`.
+- **Auth is handled by middleware** — all routes are protected via Cloudflare Zero Trust JWT verification. Access the user via `c.get('user')`. Requires `CF_ACCESS_AUD` secret (the Access application audience tag).
 - **Use the KV helpers** in `worker/db.js` for simple data storage before creating new tables.
 - **Migrations are append-only** — never edit existing migration files, always create new ones.
 
 ## Adding API Routes
 
-Add routes in `worker/index.js`. Any route under `/api/*` is protected by auth middleware:
+Add routes in `worker/index.js`. All routes are protected by auth middleware:
 
 ```js
 app.get('/api/my-feature', async (c) => {

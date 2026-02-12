@@ -8,8 +8,9 @@
   // Static assets configuration
   "assets": {
     "not_found_handling": "single-page-application",
-    // API routes are handled by the worker, everything else serves static assets
-    "run_worker_first": ["/api/*"]
+    // All requests go through the worker first for Access JWT verification
+    "run_worker_first": true,
+    "binding": "ASSETS"
   },
 
   // Enable detailed logging for debugging
@@ -20,5 +21,5 @@
     }
   }
 
-  // Auth: Basic HTTP auth with hardcoded credentials (see worker/auth.js)
+  // Auth: Cloudflare Zero Trust (set CF_ACCESS_TEAM and CF_ACCESS_AUD as secrets)
 }
