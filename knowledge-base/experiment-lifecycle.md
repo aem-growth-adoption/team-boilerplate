@@ -6,7 +6,7 @@ How we build, validate, and decide on experiments.
 
 ### 1. Build (1–3 days)
 
-Create from the template, run `/setup` (or follow `.claude/skills/setup/SKILL.md` manually), and build the core idea.
+Create from the template, run `claude /setup` (or ask your favourite AI coding tool to run `/setup`, or follow `.claude/skills/setup/SKILL.md` manually), and build the core idea.
 
 - Focus on the **one thing** you're testing
 - Use the example CRUD routes as a starting point
