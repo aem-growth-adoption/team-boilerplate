@@ -81,6 +81,19 @@ Note: `CLAUDE.md` imports `AGENTS.md` via `@AGENTS.md`, so it doesn't need separ
 
 Then, redesign `app.jsx` to be a visually appealing landing page for the project using React Spectrum components. The page should reflect the project's purpose based on its name and description. Be creative — use Spectrum layout components (`Flex`, `Grid`, `View`), typography (`Heading`, `Text`), and interactive elements (`Button`, `Well`, `Divider`, etc.) to make it look polished and professional. Keep it a single file.
 
+### Rewrite README.md
+
+Replace the entire `README.md` with a project-specific version. Remove all boilerplate/template references (no mentions of "boilerplate", "template", skill installation, or `gh repo create --template`). The new README should contain:
+
+- **Title**: the project name as an `h1`
+- **Description**: the one-line project description
+- **Stack table**: same tech stack table (Workers, Hono, Zero Trust, D1, React Spectrum, Vite)
+- **Project Structure**: updated tree — exclude `.claude/skills/` (it gets deleted in Step 4). Include `worker/`, `migrations/`, `knowledge-base/`, `index.html`, `app.jsx`, `vite.config.js`, `CLAUDE.md`, `AGENTS.md`
+- **Development section**: `npm run dev`, `npm run build`, `npm run deploy`
+- **Knowledge Base section**: link to the markdown files in `knowledge-base/`
+
+Do **not** include a production URL yet — that gets added after deploy in Step 8.
+
 ## Step 4: Remove boilerplate skills
 
 Delete the `.claude/skills/` directory — it contains skills (`setup`, `teardown`) that belong to the boilerplate template and are not needed in the new project.
@@ -141,6 +154,14 @@ Stage `wrangler.jsonc` and commit: `Configure D1 database`
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
 
+After a successful deploy, update `README.md` to add the production URL. Add it directly below the project description as a link, e.g.:
+
+```
+**Live:** https://<project-name>.<subdomain>.workers.dev
+```
+
+Use the actual URL from the deploy output. Stage and amend the most recent commit (or create a small `Add production URL to README` commit).
+
 ## Step 8a: Register with Access
 
 Clone `aem-growth-adoption/access-apps` (if not already cloned). Add an entry to `apps.json`:
@@ -151,11 +172,25 @@ Clone `aem-growth-adoption/access-apps` (if not already cloned). Add an entry to
 
 Commit and push. GitHub Actions will create the Access app and set `CF_ACCESS_AUD` on the worker.
 
+## Step 8b: Push to GitHub
+
+Push all local commits to the remote:
+
+```bash
+git push origin main
+```
+
+This ensures the repo on GitHub reflects the customized project (placeholder replacements, D1 config, production URL, etc.).
+
 ## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers, Access app registered (or pending CI)
+- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers, pushed to GitHub, Access app registered (or pending CI)
 - Auth is handled by Cloudflare Zero Trust — `CF_ACCESS_AUD` is set automatically via the access-apps repo
 - Run `npm run dev` for local development
+
+Share the key links:
+- **Live**: the production URL from the deploy output
+- **Repo**: `https://github.com/aem-growth-adoption/<project-name>`
 
 Point them to `knowledge-base/` for more on project conventions.
