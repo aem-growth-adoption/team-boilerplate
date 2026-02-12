@@ -126,31 +126,7 @@ nvm install
 ```
 If that also fails, check `node --version` against `.nvmrc` and warn the user about the version mismatch.
 
-## Step 7: Set up Cloudflare infrastructure
-
-> **Note:** If the user's Cloudflare account has access to multiple accounts, they should set `CLOUDFLARE_ACCOUNT_ID` before running wrangler commands (e.g. `export CLOUDFLARE_ACCOUNT_ID=<account-id>`). Mention this if wrangler prompts for an account choice or fails with an account-related error.
-
-### 7a. Create the KV namespace
-
-```bash
-npx wrangler kv namespace create KV
-```
-
-Parse the namespace ID from the output and add the `kv_namespaces` binding to `wrangler.jsonc`:
-
-```jsonc
-"kv_namespaces": [
-  { "binding": "KV", "id": "<namespace-id-from-output>" }
-]
-```
-
-If wrangler fails (e.g. not logged in), tell the user to run `npx wrangler login` and re-run `/setup` from this step.
-
-### 7b. Commit infrastructure changes
-
-Stage `wrangler.jsonc` and commit: `Configure KV namespace`
-
-## Step 8: Deploy
+## Step 7: Deploy
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
 
@@ -162,7 +138,9 @@ After a successful deploy, update `README.md` to add the production URL. Add it 
 
 Use the actual URL from the deploy output. Stage and amend the most recent commit (or create a small `Add production URL to README` commit).
 
-## Step 8a: Register with Access
+> **Note:** If the user's Cloudflare account has access to multiple accounts, they should set `CLOUDFLARE_ACCOUNT_ID` before running wrangler commands (e.g. `export CLOUDFLARE_ACCOUNT_ID=<account-id>`). Mention this if wrangler prompts for an account choice or fails with an account-related error. If wrangler fails because the user is not logged in, tell them to run `npx wrangler login` and re-run `/setup` from this step.
+
+## Step 7a: Register with Access
 
 Clone `aem-growth-adoption/access-apps` (if not already cloned). Add an entry to `apps.json`:
 
@@ -172,7 +150,7 @@ Clone `aem-growth-adoption/access-apps` (if not already cloned). Add an entry to
 
 Commit and push. GitHub Actions will create the Access app and set `CF_ACCESS_AUD` on the worker.
 
-## Step 8b: Push to GitHub
+## Step 7b: Push to GitHub
 
 Push all local commits to the remote:
 
@@ -182,10 +160,10 @@ git push origin main
 
 This ensures the repo on GitHub reflects the customized project (placeholder replacements, KV config, production URL, etc.).
 
-## Step 9: Done
+## Step 8: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: KV namespace created, binding configured in `wrangler.jsonc`, deployed to Cloudflare Workers, pushed to GitHub, Access app registered (or pending CI)
+- **Done**: Deployed to Cloudflare Workers (KV namespace auto-provisioned), pushed to GitHub, Access app registered (or pending CI)
 - Auth is handled by Cloudflare Zero Trust — `CF_ACCESS_AUD` is set automatically via the access-apps repo
 - Run `npm run dev` for local development
 

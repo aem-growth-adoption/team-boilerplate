@@ -19,7 +19,12 @@
       "enabled": true,
       "invocation_logs": true
     }
-  }
+  },
+
+  // KV storage — `id` is filled automatically by `wrangler kv namespace create --update-config`
+  "kv_namespaces": [
+    { "binding": "KV", "title": "{{PROJECT_NAME}}-kv" }
+  ]
 
   // Auth: Cloudflare Zero Trust (set CF_ACCESS_AUD as a secret)
 }
