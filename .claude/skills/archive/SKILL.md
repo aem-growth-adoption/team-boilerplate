@@ -35,6 +35,12 @@ npx wrangler delete --name <worker-name>
 
 If it fails (e.g. worker doesn't exist), warn but continue.
 
+## Step 3b: Deregister from Access
+
+Clone `aem-growth-adoption/access-apps` (if not already cloned). Find the matching entry in `apps.json` by project name and set its `status` to `"archived"`. Commit and push. GitHub Actions will delete the Access app.
+
+If the entry doesn't exist in `apps.json`, skip this step with a note.
+
 ## Step 4: Delete the D1 database
 
 Run:

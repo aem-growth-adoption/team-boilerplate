@@ -131,11 +131,21 @@ Stage `wrangler.jsonc` and commit: `Configure D1 database`
 
 Run `npm run deploy` to build and deploy the project to Cloudflare Workers. Share the live URL with the user from the deploy output.
 
+## Step 8a: Register with Access
+
+Clone `aem-growth-adoption/access-apps` (if not already cloned). Add an entry to `apps.json`:
+
+```json
+{ "name": "<project-name>", "status": "active" }
+```
+
+Commit and push. GitHub Actions will create the Access app and set `CF_ACCESS_AUD` on the worker.
+
 ## Step 9: Done
 
 Tell the user what was done automatically vs. what's left:
-- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers
-- Auth is pre-configured with basic HTTP auth (username: `admin`, password: `admin`) — change credentials in `worker/auth.js`
+- **Done**: D1 database created, `database_id` configured in `wrangler.jsonc`, migrations applied locally and remotely, deployed to Cloudflare Workers, Access app registered (or pending CI)
+- Auth is handled by Cloudflare Zero Trust — `CF_ACCESS_AUD` is set automatically via the access-apps repo
 - Run `npm run dev` for local development
 
 Point them to `knowledge-base/` for more on project conventions.

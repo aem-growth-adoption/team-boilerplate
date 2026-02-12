@@ -5,7 +5,7 @@
 ## Architecture
 
 - **Worker**: Hono app on Cloudflare Workers (`worker/index.js`)
-- **Auth**: Cloudflare Zero Trust (`worker/auth.js`) — verifies Access JWT on all routes
+- **Auth**: Cloudflare Zero Trust (`worker/auth.js`) — verifies Access JWT on all routes. Access apps are managed via the [`access-apps`](https://github.com/aem-growth-adoption/access-apps) GitOps repo; `/setup` registers new projects automatically.
 - **Database**: Cloudflare D1 (SQLite) for KV storage (`worker/db.js`)
 - **Frontend**: React + React Spectrum + Vite (`index.html`, `app.jsx`)
 - **Deployment**: Cloudflare Workers via `npm run deploy`
