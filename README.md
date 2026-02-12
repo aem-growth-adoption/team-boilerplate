@@ -4,21 +4,11 @@ Cloudflare Workers boilerplate for rapid prototyping with Hono, D1, and a portab
 
 ## Quick Start
 
-### Install the skill
-
 ```bash
 npx skills add aem-growth-adoption/team-boilerplate --agent claude-code --global -y
 ```
 
 Then from any directory, run `claude /setup` (or ask your favourite AI coding tool to run `/setup`). It will create a new repo from the template, customize it, install dependencies, and set up D1.
-
-### Or create manually
-
-```bash
-gh repo create <org>/my-tool --template aem-growth-adoption/team-boilerplate --private --clone
-cd my-tool
-claude /setup  # or ask your favourite AI coding tool to run /setup
-```
 
 ## What's Included
 
