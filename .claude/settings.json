@@ -6,7 +6,7 @@
     "cloudflare": {
       "source": {
         "source": "github",
-        "repo": "cloudflare/claude-plugins"
+        "repo": "cloudflare/skills"
       }
     }
   }
