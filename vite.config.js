@@ -9,13 +9,6 @@ export default defineConfig(({ command }) => ({
       config: process.env.DEV_SKIP_AUTH ? { vars: { DEV_SKIP_AUTH: process.env.DEV_SKIP_AUTH } } : undefined,
     }),
   ],
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    sourcemap: true,
-    minify: 'esbuild',
-    assetsDir: 'assets',
-  },
   server: {
     port: 3000,
     strictPort: false,
