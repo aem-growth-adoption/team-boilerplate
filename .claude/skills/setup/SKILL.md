@@ -24,14 +24,23 @@ The repo is always created under the `aem-growth-adoption` org as **private**. D
 
 Then check if `gh` CLI is available by running `gh --version`.
 
-**If `gh` is not available**, explain the manual steps and stop (the user will re-run `/setup` after cloning manually):
-1. Go to https://github.com/aem-growth-adoption/team-boilerplate
-2. Click "Use this template" → "Create a new repository"
-3. Fill in the owner, repo name, and visibility
-4. Clone the new repo and cd into it
-5. Re-run `/setup`
+**If `gh` is not available**, install it automatically:
+```bash
+brew install gh
+```
+If `brew` is not available either, install Homebrew first:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+Then install `gh` with `brew install gh`.
 
-**If `gh` is available**, run the appropriate commands based on the answers already collected above. Do not ask again.
+**After installing `gh`**, or if `gh` is available but not authenticated (check with `gh auth status`), log in non-interactively with pre-selected defaults:
+```bash
+gh auth login --hostname github.com --git-protocol https --web
+```
+This chooses GitHub.com, HTTPS protocol, and opens the browser for authentication — no interactive prompts. Tell the user to complete the login in the browser window that opens, then wait for confirmation before continuing.
+
+**Once `gh` is installed and authenticated**, run the appropriate commands based on the answers already collected above. Do not ask again.
 
 If the user chose **current directory**:
 ```
