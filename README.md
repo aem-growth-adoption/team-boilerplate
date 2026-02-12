@@ -22,9 +22,9 @@ claude /setup  # or ask your favourite AI coding tool to run /setup
 
 ## What's Included
 
-- **Hono** worker with basic HTTP auth
+- **Hono** worker with Cloudflare Zero Trust auth
 - **D1** database with a generic KV store
-- **Vanilla JS** frontend with dark/light theme
+- **React + Adobe React Spectrum** frontend
 - **Vite** dev server on port 3000
 - **Knowledge base** — portable markdown docs any AI tool can consume
 
@@ -34,9 +34,9 @@ claude /setup  # or ask your favourite AI coding tool to run /setup
 |-------|------|
 | Runtime | Cloudflare Workers |
 | Routing | Hono |
-| Auth | Basic HTTP auth |
+| Auth | Cloudflare Zero Trust (JWT) |
 | Database | Cloudflare D1 (SQLite) |
-| Frontend | Vanilla JS + CSS custom properties |
+| Frontend | React + Adobe React Spectrum |
 | Build | Vite + @cloudflare/vite-plugin |
 
 ## Project Structure
@@ -46,12 +46,12 @@ claude /setup  # or ask your favourite AI coding tool to run /setup
 ├── knowledge-base/                  # Team conventions (portable markdown)
 ├── worker/
 │   ├── index.js                     # Hono app entrypoint
-│   ├── auth.js                      # Basic HTTP auth middleware
+│   ├── auth.js                      # Cloudflare Zero Trust auth middleware
 │   └── db.js                        # D1 helpers (KV)
 ├── migrations/0001_init.sql         # KV table
 ├── index.html                       # Frontend shell
-├── app.js                           # Auth check, fetch wrapper
-├── styles.css                       # Dark/light theme
+├── app.jsx                          # React app component
+├── vite.config.js                   # Vite + Cloudflare plugin config
 ├── CLAUDE.md                        # AI tool context (points to knowledge-base/)
 └── AGENTS.md                        # Same, for Codex/Cursor/etc.
 ```
@@ -73,3 +73,4 @@ The `knowledge-base/` directory is plain markdown — readable by any AI tool, I
 - [D1 patterns](knowledge-base/d1-patterns.md)
 - [AI development conventions](knowledge-base/ai-development.md)
 - [Experiment lifecycle](knowledge-base/experiment-lifecycle.md)
+- [Go-live checklist](knowledge-base/go-live-checklist.md)
