@@ -7,7 +7,7 @@
     "node": ">=25"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "DEV_SKIP_AUTH=true vite",
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy"

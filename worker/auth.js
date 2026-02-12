@@ -63,6 +63,12 @@ async function verifyJwt(token, aud) {
 }
 
 export async function authMiddleware(c, next) {
+  if (c.env.DEV_SKIP_AUTH === 'true') {
+    c.set('user', { email: 'dev@localhost', name: 'Dev User' });
+    await next();
+    return;
+  }
+
   const aud = c.env.CF_ACCESS_AUD;
 
   if (!aud) {
