@@ -24,6 +24,7 @@ npm run deploy    # Build and deploy to Cloudflare Workers
 
 ## Conventions
 
+- **Never commit Cloudflare account IDs or other IDs** to this repo — it is public. Do not add `account_id` or similar identifiers to `wrangler.jsonc` or any config file unless they were already present.
 - **Always use `wrangler.jsonc`**, never `.toml`. Check the latest Cloudflare docs when generating CF config.
 - **Auth is handled by middleware** — all routes are protected via Cloudflare Zero Trust JWT verification. Access the user via `c.get('user')`. Requires `CF_ACCESS_AUD` secret (the Access application audience tag).
 - **Use the KV helpers** in `worker/kv.js` for simple data storage.
