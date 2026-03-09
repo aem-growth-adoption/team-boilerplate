@@ -1,5 +1,5 @@
 // TODO(go-live): update to production Access team name
-const CF_ACCESS_TEAM = 'aem-poc';
+const CF_ACCESS_TEAM = 'franklin-prod';
 const CERTS_URL = `https://${CF_ACCESS_TEAM}.cloudflareaccess.com/cdn-cgi/access/certs`;
 
 let cachedKeys = null;
